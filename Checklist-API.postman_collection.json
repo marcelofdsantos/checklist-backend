@@ -1,0 +1,373 @@
+{
+  "info": {
+    "name": "Checklist API",
+    "description": "Collection completa da API de Checklist de Empilhadeiras",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    console.log('Token salvo:', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"re\": \"ADMIN\",\n  \"senha\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "Criar Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"re\": \"OPR001\",\n  \"nomeCompleto\": \"João da Silva\",\n  \"senha\": \"senha123\",\n  \"perfil\": \"OPERADOR\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/usuarios",
+              "host": ["{{base_url}}"],
+              "path": ["usuarios"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todos Usuários",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios",
+              "host": ["{{base_url}}"],
+              "path": ["usuarios"]
+            }
+          }
+        },
+        {
+          "name": "Listar Usuários Ativos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios/ativos",
+              "host": ["{{base_url}}"],
+              "path": ["usuarios", "ativos"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Usuário por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios/1",
+              "host": ["{{base_url}}"],
+              "path": ["usuarios", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Empilhadeiras",
+      "item": [
+        {
+          "name": "Criar Empilhadeira",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelo\": \"YALE GP030\",\n  \"tipo\": \"Elétrica\",\n  \"capacidade\": 3000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/empilhadeiras",
+              "host": ["{{base_url}}"],
+              "path": ["empilhadeiras"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todas Empilhadeiras",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/empilhadeiras",
+              "host": ["{{base_url}}"],
+              "path": ["empilhadeiras"]
+            }
+          }
+        },
+        {
+          "name": "Listar Empilhadeiras Disponíveis",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/empilhadeiras/disponiveis",
+              "host": ["{{base_url}}"],
+              "path": ["empilhadeiras", "disponiveis"]
+            }
+          }
+        },
+        {
+          "name": "Bloquear Empilhadeira",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Manutenção preventiva programada\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/empilhadeiras/1/bloquear",
+              "host": ["{{base_url}}"],
+              "path": ["empilhadeiras", "1", "bloquear"]
+            }
+          }
+        },
+        {
+          "name": "Desbloquear Empilhadeira",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/empilhadeiras/1/desbloquear",
+              "host": ["{{base_url}}"],
+              "path": ["empilhadeiras", "1", "desbloquear"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Checklists",
+      "item": [
+        {
+          "name": "Criar Checklist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": \"2025-02-01\",\n  \"horaVistoria\": \"08:30:00\",\n  \"turno\": \"A\",\n  \"horimetroInicial\": 15000,\n  \"horimetroFinal\": 15100,\n  \"operadorId\": 1,\n  \"empilhadeiraId\": 1,\n  \"itens\": [\n    {\n      \"descricao\": \"Verificação de freios\",\n      \"tipo\": \"IMPEDITIVO\",\n      \"status\": \"OK\",\n      \"observacao\": \"Freios em perfeito estado\"\n    },\n    {\n      \"descricao\": \"Nível de óleo\",\n      \"tipo\": \"CONFORME\",\n      \"status\": \"OK\"\n    },\n    {\n      \"descricao\": \"Estado dos pneus\",\n      \"tipo\": \"CONFORME\",\n      \"status\": \"OK\"\n    }\n  ],\n  \"observacaoGeral\": \"Empilhadeira em perfeito estado\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/checklists",
+              "host": ["{{base_url}}"],
+              "path": ["checklists"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todos Checklists",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/checklists",
+              "host": ["{{base_url}}"],
+              "path": ["checklists"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Checklist por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/checklists/1",
+              "host": ["{{base_url}}"],
+              "path": ["checklists", "1"]
+            }
+          }
+        },
+        {
+          "name": "Listar Checklists por Empilhadeira",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/checklists/empilhadeira/1",
+              "host": ["{{base_url}}"],
+              "path": ["checklists", "empilhadeira", "1"]
+            }
+          }
+        },
+        {
+          "name": "Listar Checklists por Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/checklists/data/2025-02-01",
+              "host": ["{{base_url}}"],
+              "path": ["checklists", "data", "2025-02-01"]
+            }
+          }
+        },
+        {
+          "name": "Listar Checklists por Período",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/checklists/periodo?dataInicio=2025-02-01&dataFim=2025-02-28",
+              "host": ["{{base_url}}"],
+              "path": ["checklists", "periodo"],
+              "query": [
+                {
+                  "key": "dataInicio",
+                  "value": "2025-02-01"
+                },
+                {
+                  "key": "dataFim",
+                  "value": "2025-02-28"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
