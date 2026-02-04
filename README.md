@@ -400,16 +400,3 @@ A API retorna erros no formato padrão:
 - [ ] Implementar notificações em tempo real
 - [ ] Adicionar relatórios em PDF
 
-## 👥 Suporte
-
-Para dúvidas ou problemas:
-- Abra uma issue no repositório
-- Entre em contato com a equipe de desenvolvimento
-
-## 📄 Licença
-
-Este projeto é proprietário da Deicmar Ltda.
-
----
-
-**Desenvolvido com ❤️ para Deicmar Ltda**
