@@ -76,8 +76,7 @@ docker-compose.yml
 pom.xml
 run.sh
 
-ARQUITETURA_TECNICA.png
-FLUXOGRAMA_SISTEMA.png
+
 INTEGRATION_GUIDE.md 
 QUICKSTART.md
 BANCO DE DADOS.md
