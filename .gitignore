@@ -73,7 +73,7 @@ resources
 
 target/
 docker-compose.yml
-pom.xml
+
 run.sh
 
 
